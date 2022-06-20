@@ -54,6 +54,14 @@ const charCountState = selector({
     }
 })
 
+const charAddState = selector({
+    key: 'charAddState',
+    get: ({get}) => {
+        const text = get(textState)
+        return `The user typed "${text}". `
+    }
+})
+
 // selector는 파생된 상태의 일부를 나타낸다. 파생된 상태는 상티의 변화다.
 // 파생된 상태를 어떤 방법으로든 주어진 상태를 수정하는 순수 함수에 전달된 상태의 결과물로 생각할 수 있다.
 // atom = 전역 상태, selector = atom의 상태를 함수에 넣어 도출된 결과물
@@ -62,6 +70,10 @@ const charCountState = selector({
 
 const CharacterCount = () => {
     const count = useRecoilValue(charCountState)
+    const addText = useRecoilValue(charAddState)
     // useRecoilValue를 이용하여 selector에 접근할 수 있다.
-    return <>Character Count: {count}</>
+    return (<div>
+        <p>Character Count: {count}</p>
+        <p>{addText}</p>
+    </div>)
 }
